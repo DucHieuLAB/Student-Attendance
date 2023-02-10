@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <header class="header_area">
+        <div class=" row navbar-light bg-light">
+            <div class=" col-md-10 ">
+                <nav class="navbar ">
+
+
+                    <a class="navbar-brand" href="#">
+                        @*<img src="~/Views/img/LogoFPT-2017-copy-3042-1513928399.jpg" alt="" width="40" height="32" class="d-inline-block align-text-top">*@
+                        FPT UNIVERSITY
+                    </a>
+                </nav>
+            </div>
+            <div class="navbar col-md-2 " >
+                @if (HttpContextAccessor.HttpContext.Session.GetString("TEACHER_ID") != null)
+                {
+                    <p>@HttpContextAccessor.HttpContext.Session.GetString("TEACHER_NAME")/ <a href="/LoginRegister/Logout">Logout</a></p>
+                }
+                @if (HttpContextAccessor.HttpContext.Session.GetString("STUDENT_NAME") != null)
+                {
+                    <p>@HttpContextAccessor.HttpContext.Session.GetString("STUDENT_NAME")/ <a href="/LoginRegister/Logout">Logout</a></p>
+                }
+            </div>
+        </div>
+    </header>
+    @if (ViewData["Error"] != null)
+    {
+        <p class="text-danger">@ViewData["Error"]</p>
+    }
+    <div style="margin: 30px ; height : 70%" >
+        @RenderBody()
+    </div>
+    <div>
+        <footer class="bg-light text-center text-lg-start">
+            <!-- Copyright -->
+            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+               Author
+                <a class="text-dark" href="https://www.facebook.com/tranduc.hieu.92/">Tran Duc Hieu</a>
+            </div>
+            <!-- Copyright -->
+        </footer>
+    </div>
+</body>
+</html>

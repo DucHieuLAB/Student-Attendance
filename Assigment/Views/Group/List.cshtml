@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewData["Title"] = "List";
+
+}
+@using Assigment.Models
+@model SlotInformation
+@{ SlotInformation slot = Model;}
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    Layout = "_Layout";
+}
+<div>
+
+    <h2>
+        Activity detail
+    </h2>
+
+    <center>
+        <div id="ctl00_mainContent_divTitle"><br></div>
+        <div id="ctl00_mainContent_divContent">
+            <table class="table">
+                <tbody>
+                    <tr align="left"><td>Date:</td><td>Monday 25/04/2022</td></tr>
+                    <tr align="left"><td>Slot:</td><td>@slot.SlotTimeName</td></tr>
+                    <tr align="left"><td>Student group</td><td><a href="/Group/GroupDetail?groupID=@slot.Slot.StudentGroupId">@slot.Slot.StudentGroupId</a></td></tr>
+                    <tr align="left"><td>Instructor:</td><td>@slot.Slot.TeacherId</a></td></tr>
+                    <tr align="left"><td>Course:</td><td>@slot.Slot.CourseId</td></tr>
+                    @{string studentID = HttpContextAccessor.HttpContext.Session.GetString("STUDENT_ID");}
+                    @if (!slot.SlotNote.Equals("NOT STARTED"))
+                    {
+                        <tr align="left">
+                            <td>Attendance:</td>
+                            <td>
+                                @*@if (slot.SlotAttendances.FirstOrDefault(sa => sa.StudentId == studentID).Attendance)
+                                {
+                                    <p class="text-success">Attendacne</p>}
+                                else
+                                {<p class="text-danger">Absent</p>}*@
+
+
+
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr align="left">
+                            <td>Slot Note:</td>
+                            <td>
+
+                                <p class="text-danger">NOT STARTED</p>
+
+
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </center>
+
+
+
+
+
+
+
+</div>
+

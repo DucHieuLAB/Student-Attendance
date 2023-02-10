@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "GoupDetail";
+    
+}
+@using Assigment.Models
+@model List<Student>
+
+@{
+    Layout = "_Layout";
+}
+<div class="row">
+    <div class="col-md-1 "></div>
+    <div class="col-md-10 ">
+        <h2>
+            Group: @ViewData["GroupID"]
+        </h2>
+        <table class="table" id="id" summary="Student list">
+            <thead>
+                <tr><th>Index</th><th>Image</th><th>Member</th><th>Code</th><th>First Name</th><th>Last Name</th></tr>
+            </thead>
+            <tbody>
+                @{ int index = 1;}
+                @foreach (Student Student in Model)
+                {
+                    <tr>
+                        <td>@index</td>
+                        <td><center><img alt="" src="@Student.Image" style="height:146px;width:111px;border-width:0px;"></center></td>
+                        <td>@Student.FirstName @Student.LastName</td>
+                        <td>@Student.Rollnumber</td>
+                        <td>@Student.FirstName</td>
+                        <td>@Student.LastName</td>
+
+
+                    </tr>
+                    index++;
+                }
+                <tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+    <div class="col-md-1 "></div>
+</div>
+
+

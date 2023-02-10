@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Attendance";
+}
+@using Assigment.Models
+@model List<SlotAttendance>
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-md-1 "></div>
+    <div class="col-md-10 ">
+        <h3>Acitivity Attendance for SLot:( @ViewData["SlotID"] ) Group:( @ViewData["StudentGroup"] )</h3>
+        <form action="SubmitAttendance" method="post">
+            <input type="hidden" name="SlotID" value="@ViewData["SlotID"]">
+            <input type="hidden" name="Date" value="@Model[0].SlotDate">
+            <input type="hidden" name="SlotTimeName" value="@Model[0].SlotTimeName" />
+            <table class="table" id="id" summary="Student list">
+                <thead>
+                    <tr><th>Index</th><th>Image</th><th>Member</th><th>Code</th><th>First Name</th><th>Last Name</th><th>Attendance</th></tr>
+                </thead>
+                <tbody>
+                    @{ int index = 1;}
+                    @foreach (SlotAttendance sgd in Model)
+                    {
+                        <tr>
+                            <td>@index</td>
+                            <td><center><img alt="" src="@sgd.Student.Student.Image" style="height:146px;width:111px;border-width:0px;"></center></td>
+                            <td>@sgd.Student.Student.FirstName @sgd.Student.Student.LastName</td>
+                            <td>@sgd.Student.Student.Rollnumber</td>
+                            <td>@sgd.Student.Student.FirstName</td>
+                            <td>@sgd.Student.Student.LastName</td>
+                            <td>
+                                @{ int indexList = index - 1;}
+                                <input type="checkbox" name="slotAttendances[@indexList]" value="@sgd.Student.Student.Rollnumber" checked ="@sgd.Attendance">
+                                <input type="hidden" name="slotAttendances[@indexList]" value="">
+
+                            </td>
+
+                        </tr>
+                        index++;
+                    }
+                    <tr>
+                </tbody>
+            </table>
+            <input class="btn btn-success" id="Button1" type="submit" value="Submit" />
+        </form>
+
+    </div>
+    <div class="col-md-1 "></div>
+</div>
+

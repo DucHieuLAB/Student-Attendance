@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewData["Title"] = "SlotInformation";
+}
+@{
+    List<string> slotIds = (List<string>)ViewData["SlotID"];
+    List<int> slotTimes = (List<int>)ViewData["SlotNameID"];
+
+}
+@{ 
+    Layout = "_Layout";
+}
+<h1>SlotInformation</h1>
+<div>
+    <form action="DoCreateSlotInformation" method="post">
+        <div>
+            <label>Select Slot ID</label>
+            <select name="Newslot.SlotId" id="SlotSelect">
+                @foreach (string slotID in slotIds)
+                {
+                    <option value="@slotID">@slotID</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>Status</label>
+            <input type="text" name="Newslot.SlotStatus" />
+        </div>
+        <div>
+            <label>Note</label>
+            <input type="text" name="Newslot.SlotNote" />
+        </div>
+        <div>
+            <label>Slot date</label>
+            <input type="date" value="@DateTime.Now.ToString()" name="Newslot.SlotDate" />
+        </div>
+        <div>
+            <label>Select Slot Time</label>
+            <select name="Newslot.SlotTimeName" id="SlotTimeSelect">
+                @foreach (int slotT in slotTimes)
+                {
+                    <option value="@slotT"> @slotT.ToString()</option>
+                }
+            </select>
+        </div>
+        <div>
+            <input type="submit" value="Create Slot"/>
+        </div>
+    </form>
+
+</div>
+

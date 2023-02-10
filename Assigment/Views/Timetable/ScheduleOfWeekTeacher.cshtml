@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewData["Title"] = "ScheduleOfWeekTeacher";
+}
+@using Assigment.Models
+@model List<CourseDetail>
+@{       DateTime start = (DateTime)ViewData["Start"];
+    DateTime end = (DateTime)ViewData["End"];
+    }
+@{
+    Layout = "_Layout";
+}
+    <section class="Student-Attendance">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1 boder" style="border-radius:14px">
+                   
+                        
+
+                               
+                        <p>List Group</p>       
+                                    @foreach (CourseDetail cd in Model)
+                                    {
+
+                        <a href="/Group/GroupDetail?groupID=@cd.StudentGroupId" class="link-dark rounded">@cd.StudentGroupId</a>
+
+                                    }
+                               
+                           
+                                         
+                    
+                </div>
+                <div class="col-md-10">
+                    <div class="heading">
+                        <h2>
+                            Activities for
+                            <span id="">(@ViewData["TeacherName"])</span>
+                        </h2>
+                        <p>
+                            <b>Note</b>: These activities do not include extra-curriculum activities, such as
+                            club activities ...
+                        </p>
+                        <p>
+                            <b>Chú thích</b>: Các hoạt động trong bảng dưới không bao gồm hoạt động ngoại khóa,
+                            ví dụ như hoạt động câu lạc bộ ...
+                        </p>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">
+                                        <br>
+                                        Week
+                                        
+                                        <form action="/Timetable/ScheduleOfWeekTeacher" method="post">
+                                            <select name="date" onchange="this.form.submit();">
+                                                <option value="25/04/01/05">25/04 To 01/05</option>
+                                                <option value="02/05/08/05">02/05 To 08/05</option>
+                                                <option value="09/05/15/05">09/05 To 15/05</option>
+                                                <option value="16/05/22/05">16/05 To 22/05</option>
+                                                @if (ViewBag.selectedDate != null)
+                                                {
+                                                    DateTime d = (DateTime)ViewBag.selectedDate;
+                                                    <option selected="selected" value="@d.Day/@d.Month/@d.AddDays(6).Day/@d.AddDays(6).Month">@d.Day/@d.Month To @d.AddDays(6).Day/@d.AddDays(6).Month</option>
+                                                }
+                                                else { 
+                                            <option selected="selected" value="09/05/15/05">09/05 To 15/05</option>}
+                                            </select>
+                                        </form>
+                                    </th>
+                                    <th align="center">Mon</th>
+                                    <th align="center">Tue</th>
+                                    <th align="center">Wed</th>
+                                    <th align="center">Thu</th>
+                                    <th align="center">Fri</th>
+                                    <th align="center">Sat</th>
+                                    <th align="center">Sun</th>
+                                </tr>
+                                <tr>
+
+                                   
+                                    @for(DateTime date = start; date <= end;date = date.AddDays(1))
+                                    {
+                                <th align="center">@date.Day/@date.Month</th>
+                                        
+                                    }
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @for (int i = 1; i < 9; i++)
+                                {
+
+                                    <tr>
+                                        <td>Slot @i </td>
+                                        @for (DateTime date1 = start; date1 <= end; date1 = date1.AddDays(1))
+                                        {
+                                            @if (Model.FirstOrDefault(x => x.SlotInformations.FirstOrDefault(slotinf => slotinf.SlotDate == date1 && slotinf.SlotTimeName == i) != null) != null)
+                                            {
+                                    <td>
+                                        @{
+                                            CourseDetail courseDetail = Model.FirstOrDefault(x => x.SlotInformations.FirstOrDefault(slotinf => slotinf.SlotDate == date1 && slotinf.SlotTimeName == i) != null);
+                                        }
+                                        @courseDetail.CourseId.ToString()<br />
+                                        @courseDetail.StudentGroupId<br />
+                                        @if (courseDetail.SlotInformations.FirstOrDefault(slotinf => slotinf.SlotDate == date1 && slotinf.SlotTimeName == i).SlotNote.Equals("NOT STARTED"))
+                                        {
+                                            <p class="text-danger">NOT STARTED</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-success">FINISHED</p>
+                                        }
+                                        @if (courseDetail.SlotInformations.FirstOrDefault(slotinf => slotinf.SlotDate == date1 && slotinf.SlotTimeName == i).SlotStatus == null)
+                                        {
+
+                                            <a href="/Timetable/Attendance?SlotId=@courseDetail.SlotId&SlotTimeName=@i&Date=@date1">Check Attendance</a>
+                                        }
+                                        else
+                                        { 
+                                            <a href="/Timetable/Attendance?SlotId=@courseDetail.SlotId&SlotTimeName=@i&Date=@date1">Edit Attendance</a>
+                                        }
+
+
+
+                                    </td>
+                                            }
+                                            else
+                                            {
+                                                <td>-</td>
+                                            }
+
+
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="btn-group" id="btn-Admin">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1 "></div>
+            </div>
+
+
+        </div>
+    </section>
+
+
